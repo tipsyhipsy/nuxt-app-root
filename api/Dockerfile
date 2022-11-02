@@ -1,10 +1,10 @@
 FROM ruby:2.7.1-alpine
 
 ARG WORKDIR
-ARG RUNTIME_PACKAGES="noejs tzdata postgresql-dev postgresql git"
+ARG RUNTIME_PACKAGES="nodejs tzdata postgresql-dev postgresql git"
 ARG DEV_PACKAGE="build-base curl-dev"
 
-ENV HOME=/${WORKDIR}} \
+ENV HOME=/${WORKDIR} \
     LANG=C.UTF-8 \
     TZ=Asia/Tokyo
 
@@ -13,8 +13,8 @@ WORKDIR ${HOME}
 COPY Gemfile* ./
 
 RUN apk update && \
-    apk upgrage && \
-    apk add --no-cache ${RUNTIME_PACKAGES} &&\
+    apk upgrade && \
+    apk add --no-cache ${RUNTIME_PACKAGES} && \
     apk add --virtual build-dependencies --no-cache ${DEV_PACKAGE} && \
     bundle install -j4 && \
     apk del build-dependencies
